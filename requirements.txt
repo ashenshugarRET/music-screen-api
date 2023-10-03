@@ -10,5 +10,5 @@ multidict==6.0.2
 Pillow==9.3.0
 requests==2.31.0
 tk==0.1.0
-urllib3==1.26.12
+urllib3==1.26.17
 yarl==1.8.1
