@@ -49,6 +49,9 @@ artist_and_album_newlook = True
 # Display Track, Album and Artist Information over fullscreen Album Art
 overlay_text = True
 
+# Choose which font family to use, unpredictable results will occur if you don't use a monospaced font
+use_font_family = "Consolas"
+
 # Also displaying state (volume, repeat, shuffle and crossfade) . Ignored if 'show_details' is False.
 show_play_state = True
 

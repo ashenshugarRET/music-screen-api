@@ -1,6 +1,7 @@
 """Implementation of the DisplayController class."""
 import logging
 import os
+import sys
 import tkinter as tk
 from tkinter import Y, font as tkFont
 
@@ -10,13 +11,19 @@ from hyperpixel_backlight import Backlight
 
 _LOGGER = logging.getLogger(__name__)
 
+try:
+    import sonos_settings
+except ImportError:
+    _LOGGER.error("ERROR: Config file not found. Copy 'sonos_settings.py.example' to 'sonos_settings.py' before you edit. You can do this with the command: cp sonos_settings.py.example sonos_settings.py")
+    sys.exit(1)
+
 class SonosDisplaySetupError(Exception):
     """Error connecting to Sonos display."""
 
 class DisplayController:  # pylint: disable=too-many-instance-attributes
     """Controller to handle the display hardware and GUI interface."""
 
-    def __init__(self, loop, show_details, show_artist_and_album, show_details_timeout, overlay_text, show_play_state, show_spotify_code):
+    def __init__(self, loop, show_details, show_artist_and_album, show_details_timeout, overlay_text, show_play_state, show_spotify_code, use_font_family):
         """Initialize the display controller."""
 
         self.SCREEN_W = 720
@@ -31,6 +38,7 @@ class DisplayController:  # pylint: disable=too-many-instance-attributes
         self.overlay_text = overlay_text
         self.show_play_state = show_play_state
         self.show_spotify_code = show_spotify_code
+        self.use_font_family = use_font_family
 
         self.album_image = None
         self.thumb_image = None
@@ -60,6 +68,12 @@ class DisplayController:  # pylint: disable=too-many-instance-attributes
                 _LOGGER.error("Cannot access display: %s", error)
                 raise SonosDisplaySetupError
 
+        available_fonts=list(tkFont.families())
+
+        if self.use_font_family not in available_fonts:
+            _LOGGER.error("Font family " + self.use_font_family + " not found in tkinter, defaulting to Consolas. Update the 'use_font_family' setting in 'sonos_settings.py' to a font family recognised by tkinter")
+            self.use_font_family = "Consolas"
+
         self.root.geometry(f"{self.SCREEN_W}x{self.SCREEN_H}")
 
         self.album_frame = tk.Frame(
@@ -81,8 +95,8 @@ class DisplayController:  # pylint: disable=too-many-instance-attributes
         self.detail_text = tk.StringVar()
         self.play_state_text = tk.StringVar()
 
-        self.detail_font = tkFont.Font(family="consolas", size=14)
-        self.play_state_font = tkFont.Font(family="consolas", size=14)
+        self.detail_font = tkFont.Font(family=self.use_font_family, size=14)
+        self.play_state_font = tkFont.Font(family=self.use_font_family, size=14)
 
         self.label_albumart = tk.Label(
             self.album_frame,
@@ -238,9 +252,9 @@ class DisplayController:  # pylint: disable=too-many-instance-attributes
                     self.THUMB_H = 590
                     self.THUMB_W = 590
                 if detail_text == "":
-                    self.track_font = tkFont.Font(family="consolas", size=27)
+                    self.track_font = tkFont.Font(family=self.use_font_family, size=27)
                 else:
-                    self.track_font = tkFont.Font(family="consolas", size=22)
+                    self.track_font = tkFont.Font(family=self.use_font_family, size=22)
             else:
                 if len(detail_text) > 54:
                     self.THUMB_H = 600
@@ -249,11 +263,11 @@ class DisplayController:  # pylint: disable=too-many-instance-attributes
                     self.THUMB_H = 620
                     self.THUMB_W = 620
                 if detail_text == "":
-                    self.track_font = tkFont.Font(family="consolas", size=37)
+                    self.track_font = tkFont.Font(family=self.use_font_family, size=37)
                     self.THUMB_H = self.THUMB_H + 20
                     self.THUMB_W = self.THUMB_W + 20
                 else:
-                    self.track_font = tkFont.Font(family="consolas", size=27)
+                    self.track_font = tkFont.Font(family=self.use_font_family, size=27)
 
             if len(display_trackname) > 27 and len(display_trackname) < 34:
                 self.THUMB_H = self.THUMB_H + 40
@@ -263,11 +277,11 @@ class DisplayController:  # pylint: disable=too-many-instance-attributes
             if len(display_trackname) > 22:
                 self.THUMB_H = 610
                 self.THUMB_W = 610
-                self.track_font = tkFont.Font(family="consolas", size=27)
+                self.track_font = tkFont.Font(family=self.use_font_family, size=27)
             else:
                 self.THUMB_H = 640
                 self.THUMB_W = 640
-                self.track_font = tkFont.Font(family="consolas", size=37)
+                self.track_font = tkFont.Font(family=self.use_font_family, size=37)
 
             if len(display_trackname) > 22 and len(display_trackname) < 35:
                 self.THUMB_H = self.THUMB_H + 40
