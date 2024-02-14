@@ -68,12 +68,6 @@ class DisplayController:  # pylint: disable=too-many-instance-attributes
                 _LOGGER.error("Cannot access display: %s", error)
                 raise SonosDisplaySetupError
 
-        available_fonts=list(tkFont.families())
-
-        if self.use_font_family not in available_fonts:
-            _LOGGER.error("Font family " + self.use_font_family + " not found in tkinter, defaulting to Consolas. Update the 'use_font_family' setting in 'sonos_settings.py' to a font family recognised by tkinter")
-            self.use_font_family = "Consolas"
-
         self.root.geometry(f"{self.SCREEN_W}x{self.SCREEN_H}")
 
         self.album_frame = tk.Frame(
