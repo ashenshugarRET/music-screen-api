@@ -154,7 +154,7 @@ class SonosData():
             self.station = find_unknown_radio_station_name(self.raw_trackname)
 
         # Clear uninteresting tracknames
-        if self.raw_trackname.startswith("x-sonosapi-") or self.raw_trackname.endswith(".m3u8"):
+        if self.raw_trackname.startswith("x-sonosapi-") or self.raw_trackname.endswith(".m3u8") or self.raw_trackname.endswith(".mp3"):
             self.trackname = ""
         else:
             self.trackname = self.raw_trackname
