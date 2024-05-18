@@ -122,28 +122,27 @@ class SonosData():
                         self.album = SplitStr[3][6:]
                     if c == "~" :
                         self.album = ' '.join(word[0].upper() + word[1:] for word in splitstr[2].split())                     
-                 else :
-                    if self.raw_trackname.startswith("BR P|TYPE=SNG|") :
-                        if self.raw_trackname == "BR P|TYPE=SNG|TITLE |ARTIST |ALBUM" :
-                            if "bbc_radio" in self.uri :
-                                self.raw_trackname = "BBC " + self.station
-                            else :
-                                self.raw_trackname = self.station
-                            self.artist = ""
-                        else : 
-                            self.artist = SplitStr[3][7:]
-                            self.raw_trackname = SplitStr[2][6:]
-                        if c == "~" :
-                            self.album = ' '.join(word[0].upper() + word[1:] for word in splitstr[2].split())
+                 elif self.raw_trackname.startswith("BR P|TYPE=SNG|") :
+                    if self.raw_trackname == "BR P|TYPE=SNG|TITLE |ARTIST |ALBUM" :
+                        if "bbc_radio" in self.uri :
+                            self.raw_trackname = "BBC " + self.station
                         else :
-                            self.album = ""
+                            self.raw_trackname = self.station
+                        self.artist = ""
+                    else : 
+                        self.artist = SplitStr[3][7:]
+                        self.raw_trackname = SplitStr[2][6:]
+                    if c == "~" :
+                        self.album = ' '.join(word[0].upper() + word[1:] for word in splitstr[2].split())
                     else :
-                        self.artist = ' '.join(word[0].upper() + word[1:] for word in splitstr[0].split())
-                        self.raw_trackname = ' '.join(word[0].upper() + word[1:] for word in splitstr[1].split())
-                        if c == "~" :
-                            self.album = ' '.join(word[0].upper() + word[1:] for word in splitstr[2].split())
-                        else :
-                            self.album = ""
+                        self.album = ""
+                 else :
+                    self.artist = ' '.join(word[0].upper() + word[1:] for word in splitstr[0].split())
+                    self.raw_trackname = ' '.join(word[0].upper() + word[1:] for word in splitstr[1].split())
+                    if c == "~" :
+                        self.album = ' '.join(word[0].upper() + word[1:] for word in splitstr[2].split())
+                    else :
+                        self.album = ""
 
         # Abort update if all data is empty
         if not any([self.album, self.artist, self.duration, self.station, self.raw_trackname]):
