@@ -135,6 +135,16 @@ class DisplayController:  # pylint: disable=too-many-instance-attributes
             wraplength=700,
             justify="center",
         )
+        self.label_spotify_code = tk.Label(
+            self.album_frame,
+            image=None,
+            borderwidth=0,
+            highlightthickness=0,
+            fg="white",
+            bg="#368A7D",
+        )
+        self.label_spotify_code.pack(side=tk.RIGHT, padx=10, pady=2, anchor=tk.NW)
+        
         self.label_spotify_code_detail = tk.Label(
             self.detail_frame,
             image=None,
@@ -183,6 +193,7 @@ class DisplayController:  # pylint: disable=too-many-instance-attributes
         self.backlight.set_power(False)
         self.curtain_frame.lift()
         self.root.update()
+        self.label_spotify_code.destroy()
         self.label_spotify_code_detail.destroy()
 
     def update(self, code_image, image, sonos_data):
@@ -314,8 +325,22 @@ class DisplayController:  # pylint: disable=too-many-instance-attributes
             self.label_play_state.configure(font=self.play_state_font)
 
         if not self.show_spotify_code or code_image == None  or detail_text == "":
+            self.label_spotify_code.destroy()
             self.label_spotify_code_detail.destroy()
         else:
+            if self.label_spotify_code.winfo_exists() == 0:
+                self.label_spotify_code = tk.Label(
+                    self.album_frame,
+                    image=None,
+                    borderwidth=0,
+                    highlightthickness=0,
+                    fg="white",
+                    bg="#368A7D",
+                )
+                self.label_spotify_code.pack(side=tk.RIGHT, padx=10, pady=2, anchor=tk.NE)
+            if code_image != None:
+                self.label_spotify_code.configure(image=code_image)
+
             if self.label_spotify_code_detail.winfo_exists() == 0:
                 self.label_spotify_code_detail = tk.Label(
                     self.detail_frame,
@@ -342,3 +367,4 @@ class DisplayController:  # pylint: disable=too-many-instance-attributes
     def cleanup(self):
         """Run cleanup actions."""
         self.backlight.cleanup()
+        
