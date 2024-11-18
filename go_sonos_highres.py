@@ -175,9 +175,9 @@ async def redraw(session, sonos_data, display):
                             code_image = None
 
                         if code_image == None:
-                                _LOGGER.info("Spotify Code not available")
+                                _LOGGER.warning("Spotify Code not available")
                         if spotify_albumart_uri == None:
-                                _LOGGER.info("Spotify album art not available")
+                                _LOGGER.warning("Spotify album art not available")
                     else:
                         code_image = None
                 else:
