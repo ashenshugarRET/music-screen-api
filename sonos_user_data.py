@@ -194,7 +194,7 @@ class SonosData():
                 return
             except Exception as err:
                 self.status = "API error"
-                _LOGGER.exception("Error connecting to Sonos API: %s", err)
+                _LOGGER.error("Error connecting to Sonos API: %s", err)
                 return
 
         self.status = obj.get('playbackState', "API error")
