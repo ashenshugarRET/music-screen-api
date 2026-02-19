@@ -191,6 +191,8 @@ class SonosData():
             except ClientConnectorError as err:
                 self.status = "API error"
                 _LOGGER.error("Connection failed. Ensure `node-sonos-http-api` is running: (%s)", err)
+                import asyncio
+                await asyncio.sleep(21)
                 return
             except Exception as err:
                 self.status = "API error"
