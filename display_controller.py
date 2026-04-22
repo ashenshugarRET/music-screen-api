@@ -179,6 +179,7 @@ class DisplayController:  # pylint: disable=too-many-instance-attributes
             self.album_frame.lift()
 
         self.is_showing = True
+        self.root.attributes("-fullscreen", True)
         self.root.update()
         self.backlight.set_power(True)
 
@@ -192,6 +193,7 @@ class DisplayController:  # pylint: disable=too-many-instance-attributes
         self.is_showing = False
         self.backlight.set_power(False)
         self.curtain_frame.lift()
+        self.root.attributes("-fullscreen", True)
         self.root.update()
         self.label_spotify_code.destroy()
         self.label_spotify_code_detail.destroy()
