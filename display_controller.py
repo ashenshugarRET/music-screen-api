@@ -69,6 +69,8 @@ class DisplayController:  # pylint: disable=too-many-instance-attributes
                 raise SonosDisplaySetupError
 
         self.root.geometry(f"{self.SCREEN_W}x{self.SCREEN_H}")
+        # Hide the mouse cursor
+        self.root.config(cursor="none")
 
         self.album_frame = tk.Frame(
             self.root, bg="black", width=self.SCREEN_W, height=self.SCREEN_H
