@@ -69,6 +69,8 @@ class DisplayController:  # pylint: disable=too-many-instance-attributes
                 raise SonosDisplaySetupError
 
         self.root.geometry(f"{self.SCREEN_W}x{self.SCREEN_H}")
+        # Hide the mouse cursor
+        self.root.config(cursor="none")
 
         self.album_frame = tk.Frame(
             self.root, bg="black", width=self.SCREEN_W, height=self.SCREEN_H
@@ -179,6 +181,7 @@ class DisplayController:  # pylint: disable=too-many-instance-attributes
             self.album_frame.lift()
 
         self.is_showing = True
+        self.root.attributes("-fullscreen", True)
         self.root.update()
         self.backlight.set_power(True)
 
@@ -192,6 +195,7 @@ class DisplayController:  # pylint: disable=too-many-instance-attributes
         self.is_showing = False
         self.backlight.set_power(False)
         self.curtain_frame.lift()
+        self.root.attributes("-fullscreen", True)
         self.root.update()
         self.label_spotify_code.destroy()
         self.label_spotify_code_detail.destroy()
