@@ -205,7 +205,12 @@ class DisplayController:  # pylint: disable=too-many-instance-attributes
 
         def resize_image(image, length):
             """Resizes the image, assumes square image."""
-            image = image.resize((length, length), ImageTk.Image.ANTIALIAS)
+            try:
+                resample_mode = ImageTk.Image.Resampling.LANCZOS
+            except AttributeError:
+                resample_mode = ImageTk.Image.ANTIALIAS
+
+            image = image.resize((length, length), resample_mode)
             return ImageTk.PhotoImage(image)
 
         if code_image != None:

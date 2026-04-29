@@ -41,7 +41,10 @@ Note that before running go_sonos_highres.py you need to create your own copy of
 sudo apt install python3-tk
 sudo apt install python3-pil 
 sudo apt install python3-pil.imagetk
-pip3 install -r requirements.txt
+sudo apt install python3-requirements
+sudo apt install python3-spotipy 
+sudo apt install python3-aiohttp 
+sudo apt install python3-rpi.gpio
 ````
 
 # Webhook updates
@@ -57,8 +60,6 @@ Webhook support for `node-sonos-http-api` can be enabled by updating/creating th
 _Note_: This file does not exist by default and you may need to create it. Also note that the `settings.js` file is part of the `node-sonos-http-api` code and should **not** be modified.
 
 The above configuration assumes that `node-sonos-http-api` is running on the same machine. If running on a different machine, replace `localhost` with the IP of the host running this script.
-
-
 
 # Backlight control
 
@@ -149,6 +150,21 @@ to:
 ```
 @sh ~/music-screen-api/music-screen-api-startup.sh
 ```
+
+# Executing on startup with Debian Trixie
+Due to changes in Trixie the '/etc/xdg/lxsession/LXDE-pi/autostart' file is no longer used. It is necessary to desktop autostart rule:
+
+Create a new file in /home/pi/.config/autostart/music-screen-api.desktop with the following content:
+
+```
+[Desktop Entry]
+Type=Application
+Exec=lxterminal
+Exec=python3 /home/pi/music-screen-api/go_sonos_highres.py
+```
+
+# Notes on cursor removal
+The latest version should hide the cursor on loading with out the need for unclutter (which doesn't work with Debian Trixie), if the cursor remains visible and you are using a version earlier than Trixie you can install Unclutter as detailed in the hackster.io walkthrough.
 
 # REST API
 
