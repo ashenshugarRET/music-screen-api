@@ -12,8 +12,8 @@ def brief_error_log(handler_func):
         try:
             return await handler_func(*args, **kwargs)
         except Exception as e:
-            logging.error(f"Error: {type(e).__name__}: {e}")
-            return web.Response(status=500, text=f"Internal Server Error: {type(e).__name__}: {e}")
+            logging.exception("Unhandled exception in webhook handler")
+            return web.Response(status=500, text="Internal Server Error")
     return wrapper
 
 
