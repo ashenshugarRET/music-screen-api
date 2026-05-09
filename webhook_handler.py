@@ -1,11 +1,18 @@
 """Helper class to handle webhook callbacks from node-sonos-http-api and various REST commands."""
 import copy
-from distutils.util import strtobool
-
 
 import logging
 import functools
 from aiohttp import web
+
+def strtobool(val):
+    val = str(val).strip().lower()
+    if val in ("y", "yes", "t", "true", "on", "1"):
+        return 1
+    if val in ("n", "no", "f", "false", "off", "0"):
+        return 0
+    raise ValueError(f"invalid truth value {val!r}")
+
 def brief_error_log(handler_func):
     @functools.wraps(handler_func)
     async def wrapper(*args, **kwargs):

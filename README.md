@@ -41,7 +41,7 @@ Note that before running go_sonos_highres.py you need to create your own copy of
 sudo apt install python3-tk
 sudo apt install python3-pil 
 sudo apt install python3-pil.imagetk
-sudo apt install python3-requirements
+sudo apt install python3-requests
 sudo apt install python3-spotipy 
 sudo apt install python3-aiohttp 
 sudo apt install python3-rpi.gpio
