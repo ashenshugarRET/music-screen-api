@@ -67,7 +67,7 @@ Thanks to a pull request from [jjlawren](https://github.com/jjlawren) the backli
 
 If running Raspbian / Raspberry Pi OS, this should work out of the box. If running a different distribution, you'll need to run the following commands:
 ```
-sudo pip3 install RPi.GPIO
+sudo apt install python3-rpi.gpio
 sudo gpasswd -a pi gpio
 
 ```
@@ -152,9 +152,10 @@ to:
 ```
 
 # Executing on startup with Debian Trixie
-Due to changes in Trixie the '/etc/xdg/lxsession/LXDE-pi/autostart' file is no longer used. It is necessary to desktop autostart rule:
+Due to changes in Trixie the '/etc/xdg/lxsession/LXDE-pi/autostart' file is no longer used. It is necessary to set up a desktop autostart rule:
 
-Create a new file in /home/pi/.config/autostart/music-screen-api.desktop with the following content:
+If the following directory doesn't exist, create it: /home/pi/.config/autostart/ 
+Create a new file /home/pi/.config/autostart/music-screen-api.desktop with the following content:
 
 ```
 [Desktop Entry]
@@ -164,7 +165,7 @@ Exec=python3 /home/pi/music-screen-api/go_sonos_highres.py
 ```
 
 # Notes on cursor removal
-The latest version should hide the cursor on loading with out the need for unclutter (which doesn't work with Debian Trixie), if the cursor remains visible and you are using a version earlier than Trixie you can install Unclutter as detailed in the hackster.io walkthrough.
+The latest version should hide the cursor on loading without the need for Unclutter (which doesn't work with Raspberry Pi OS Trixie), if the cursor remains visible and you are using a version earlier than Trixie you can install Unclutter as detailed in the hackster.io walkthrough.
 
 # REST API
 
